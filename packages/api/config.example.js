@@ -3,6 +3,7 @@ module.exports = {
   port: 1337,
   publicURL: 'http://localhost:1337',
   database: {
+    client: 'mssql',
     host: 'localhost',
     port: 5432,
     user: 'db_user',

@@ -6,11 +6,10 @@ let __database: Knex
 
 export const getDatabase = (): Knex => {
   if (!__database) {
-    console.warn('___INITIATING DATABASE ___')
-    const { database: { host, port, user, password, database } } = getConfig()
+    const { database: { client, host, port, user, password, database } } = getConfig()
 
     __database = knex({
-      client: 'mssql',
+      client,
       connection: {
         host,
         port,
