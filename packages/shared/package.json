@@ -1,0 +1,32 @@
+{
+  "name": "@bulletproof/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["dist/index.d.ts"]
+    }
+  },
+  "scripts": {
+    "build": "tsup --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tsup": "^6.7.0",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
+  },
+  "dependencies": {
+    "@nuxt/devalue": "^2.0.0"
+  }
+}

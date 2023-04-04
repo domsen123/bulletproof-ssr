@@ -1,0 +1,19 @@
+{
+  "name": "bulletproof-vue-ssr",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "api": "pnpm -r --filter @bulletproof/api",
+    "app": "pnpm -r --filter @bulletproof/app",
+    "shared": "pnpm -r --filter @bulletproof/shared"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.38.2",
+    "@types/node": "^18.15.11",
+    "eslint": "^8.37.0",
+    "typescript": "^5.0.3"
+  }
+}

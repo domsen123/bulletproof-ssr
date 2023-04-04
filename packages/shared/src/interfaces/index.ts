@@ -1,0 +1,5 @@
+export * from './IAuth'
+export * from './IBase'
+export * from './IRole'
+export * from './IRoleUser'
+export * from './IUser'

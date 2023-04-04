@@ -1,0 +1,13 @@
+@use 'vuetify/settings' with (
+  $utilities: false,
+  $color-pack: true,
+  $body-font-family: 'Open Sans',
+
+  $button-elevation: ('default': 0, 'hover': 2, 'active': 4),
+  $typography: (
+    'button': (
+      'letter-spacing': normal,
+      'text-transform': none
+    )
+  )
+);

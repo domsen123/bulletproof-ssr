@@ -1,0 +1,38 @@
+{
+  "name": "@bulletproof/api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "tsup --watch --onSuccess 'node dist/index.js'",
+    "build": "tsup",
+    "start": "node -r tsconfig-paths/register dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@bulletproof/app": "workspace:^",
+    "@bulletproof/shared": "workspace:^",
+    "@fastify/cookie": "^8.3.0",
+    "@fastify/middie": "^8.1.0",
+    "@nuxt/devalue": "^2.0.0",
+    "cors": "^2.8.5",
+    "fastify": "^4.15.0",
+    "glob": "^9.3.4",
+    "jsonwebtoken": "^9.0.0",
+    "knex": "^2.4.2",
+    "lodash": "^4.17.21",
+    "mssql": "^9.1.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/lodash": "^4.14.192",
+    "@types/uuid": "^9.0.1",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.6",
+    "vite": "^4.2.1"
+  }
+}
