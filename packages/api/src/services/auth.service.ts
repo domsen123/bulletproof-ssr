@@ -1,11 +1,12 @@
 import crpyto from 'node:crypto'
-import type { IAuth, IUser } from '@bulletproof/shared'
+import type { AppAuth, IAuth, IUser, IUserAppSafe } from '@bulletproof/shared'
 import jwt from 'jsonwebtoken'
 import { getTableName } from '../database/utils'
 import { getDatabase } from '../database'
 import { verifyString } from '../utils'
 import { getConfig } from '../config'
 import type { EventDispatcher } from '../events'
+import { ApiError } from '../api/apiError'
 
 export class AuthService {
   private db = getDatabase()
@@ -16,7 +17,7 @@ export class AuthService {
     return crpyto.createHash('md5').update(`${token}:${expire.getTime()}`).digest('hex')
   }
 
-  private generateToken = (userRecord: IUser): IAuth => {
+  private generateAuthInfo = (userRecord: IUser): IAuth => {
     const { secret } = getConfig()
 
     const today = new Date()
@@ -41,45 +42,45 @@ export class AuthService {
     return jwt.verify(token, secret)
   }
 
-  private toSafeUserRecord = (user: IUser): Omit<IUser, 'password'> => {
+  private toSafeUserRecord = (user: IUser): IUserAppSafe => {
     Reflect.deleteProperty(user, 'password')
     return user
   }
 
-  public SignIn = async (mail: string, password: string): Promise<[Omit<IUser, 'password'>, IAuth]> => {
+  public SignIn = async (mail: string, password: string): Promise<AppAuth> => {
     this.eventDispatcher.dispatch('before.sign_in', null)
 
     const userRecord = await this.db<IUser>(getTableName('users')).where({ mail }).first()
-    if (!userRecord) throw new Error('User not found')
+    if (!userRecord) throw new ApiError(404, 'User or password incorrect.')
 
     if (userRecord.provider === 'local' && userRecord.password) {
       const validPassword = await verifyString(password, userRecord.password)
-      if (!validPassword) throw new Error('Invalid Password')
+      if (!validPassword) throw new ApiError(404, 'User or password incorrect.')
     }
     else {
-      throw new Error('This provider is not configured yet')
+      throw new ApiError(406, 'This provider is not implemented yet.')
     }
 
-    const auth = this.generateToken(userRecord)
+    const auth = this.generateAuthInfo(userRecord)
 
-    const data: [Omit<IUser, 'password'>, IAuth] = [this.toSafeUserRecord(userRecord), auth]
+    const data: AppAuth = [this.toSafeUserRecord(userRecord), auth]
 
     this.eventDispatcher.dispatch('after.sign_in', data)
 
     return data
   }
 
-  public SignInWithToken = async (access_token: string): Promise<[Omit<IUser, 'password'>, IAuth]> => {
+  public SignInWithToken = async (access_token: string): Promise<AppAuth> => {
     const payload = this.verifyToken(access_token)
-    if (!payload) throw new Error('Token can not be verified')
+    if (!payload) throw new ApiError(403, 'Token can not be verified.')
 
     const { id: user_id, exp } = payload as { id: string; exp: number }
 
     const expire = new Date(exp * 1000)
     const userRecord = await this.db<IUser>(getTableName('users')).where({ id: user_id }).first()
-    if (!userRecord) throw new Error('User not found')
+    if (!userRecord) throw new ApiError(404, 'User not found.')
 
-    const data: [Omit<IUser, 'password'>, IAuth] = [
+    const data: AppAuth = [
       this.toSafeUserRecord(userRecord),
       {
         id: this.generateTokenId(access_token, expire),

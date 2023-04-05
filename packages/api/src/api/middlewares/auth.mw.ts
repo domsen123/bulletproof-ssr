@@ -15,15 +15,13 @@ export const isAuthenticated = async (req: FastifyRequest) => {
   if (!token && get(req.query, 'access_token'))
     token = get(req.query, 'access_token')
 
-  if (!token) return
-
-  const { secret } = getConfig()
-  try {
-    const decoded: any = jwt.verify(token, secret)
-    req.user_id = decoded.id
-    req.token = token
-  }
-  catch (e: any) {
-    req.user_id = ''
+  if (token) {
+    const { secret } = getConfig()
+    try {
+      const decoded: any = jwt.verify(token, secret)
+      req.user_id = decoded.id
+      req.token = token
+    }
+    catch (e: any) {}
   }
 }

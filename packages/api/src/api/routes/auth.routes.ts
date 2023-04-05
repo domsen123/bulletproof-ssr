@@ -1,10 +1,20 @@
-import type { FastifyInstance } from 'fastify'
-import type { SignInRequest } from '@bulletproof/shared'
+import type { FastifyInstance, FastifyReply } from 'fastify'
+import type { IAuth, IUser, SignInRequest } from '@bulletproof/shared'
 import { getAuthService } from '../../locator'
 import { isAuthenticated } from '../middlewares'
 import { toReply } from '../../utils'
 
 export default async (fastify: FastifyInstance) => {
+  const sendAuthReply = (reply: FastifyReply, user: Omit<IUser, 'password'>, auth: IAuth) => {
+    return reply
+      .setCookie('access_token', auth.token, {
+        path: '/',
+        expires: auth.expire,
+        httpOnly: true,
+      })
+      .send(toReply([user, auth]))
+  }
+
   fastify.route<SignInRequest>({
     method: 'POST',
     url: '/auth/sign_in',
@@ -13,19 +23,12 @@ export default async (fastify: FastifyInstance) => {
         const { mail, password } = req.body
         const authService = getAuthService()
         const [user, auth] = await authService.SignIn(mail, password)
-        const token = auth.token
-        return reply
-          .setCookie('access_token', token, {
-            path: '/',
-            expires: auth.expire,
-            httpOnly: true,
-          })
-          .send(toReply([user, auth]))
+
+        return sendAuthReply(reply, user, auth)
       }
       catch (e: any) {
         fastify.log.error('🔥 Error: %o', e)
-        reply.statusCode = 500
-        return reply.send(e)
+        throw e
       }
     },
   })
@@ -43,13 +46,7 @@ export default async (fastify: FastifyInstance) => {
 
         const authService = getAuthService()
         const [user, auth] = await authService.SignInWithToken(req.token)
-        return reply
-          .setCookie('access_token', req.token, {
-            path: '/',
-            expires: auth.expire,
-            httpOnly: true,
-          })
-          .send(toReply([user, auth]))
+        return sendAuthReply(reply, user, auth)
       }
       catch (e: any) {
         fastify.log.error('🔥 Error: %o', e)

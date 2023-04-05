@@ -9,10 +9,9 @@
 </template>
 
 <script lang="ts" setup>
-import { getApiService } from '../locator'
+import { useAppStore } from '~/stores'
 
-const service = getApiService()
-const store = service.useStore()
+const store = useAppStore()
 </script>
 
 <style lang="scss"></style>

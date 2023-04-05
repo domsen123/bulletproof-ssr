@@ -9,4 +9,6 @@ export interface IUserUnsaved {
   identifier?: string
 }
 
+export interface IUserAppSafe extends Omit<IUser, 'password'> {}
+
 export interface IUser extends IUserUnsaved, IBase {}

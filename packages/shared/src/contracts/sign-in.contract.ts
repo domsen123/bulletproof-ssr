@@ -1,4 +1,4 @@
-import type { IAuth, IUser } from '../interfaces'
+import type { IAuth, IUserAppSafe } from '../interfaces'
 
 export interface SignInRequestBody {
   mail: string
@@ -10,5 +10,7 @@ export interface SignInRequest {
 }
 
 export interface SignInResponse {
-  items: [Omit<IUser, 'password'>, IAuth]
+  items: [IUserAppSafe, IAuth]
 }
+
+export type AppAuth = [IUserAppSafe, IAuth]

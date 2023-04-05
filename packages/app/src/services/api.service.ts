@@ -1,19 +1,22 @@
-import type { IBase } from '@bulletproof/shared'
+import get from 'lodash/get'
+import { parseCookie } from '@bulletproof/shared'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import createAxios from 'axios'
-import { defineStore } from 'pinia'
-import { parseCookie } from '../utils'
-import type { AppState } from '../types'
+import createAxios, { isAxiosError } from 'axios'
+import { useAppStore } from '~/stores'
 
 export class ApiService {
   private axios: AxiosInstance
 
   constructor(isClient: boolean, baseURL?: string, cookieString?: string) {
-    this.useStore()
+    useAppStore()
     this.axios = createAxios.create({
       baseURL,
       withCredentials: isClient,
       proxy: false,
+    })
+
+    this.axios.interceptors.response.use(response => Promise.resolve(response), (error) => {
+      throw get(error, 'response.data', { error: 'Internal Server Error', message: 'Unknown Error.', statusCode: 500, stack: error })
     })
 
     if (!isClient && cookieString) {
@@ -27,38 +30,8 @@ export class ApiService {
     }
   }
 
-  public useStore = defineStore('app', {
-    state: () => ({
-      currentUser: null,
-      currentAuth: null,
-      items: [],
-    }) as AppState,
-    getters: {
-      getItem: state => (id: string) => computed(() => state.items.find(item => item.id === id)),
-      getCurrentUser: state => computed(() => state.items.find(item => item.id === state.currentUser)),
-      getCurrentAuth: state => computed(() => state.items.find(item => item.id === state.currentAuth)),
-    },
-    actions: {
-      setAuth(payload: [IBase, IBase]) {
-        const [user, auth] = payload
-        this.$state.currentUser = user.id
-        this.$state.currentAuth = auth.id
-      },
-      setItem(data: IBase) {
-        const index = this.$state.items.findIndex(item => item.id === data.id)
-        if (index === -1)
-          this.$state.items.push(data)
-        else
-          this.$state.items[index] = data
-      },
-      setItems(data: IBase[]) {
-        data.forEach(d => this.setItem(d))
-      },
-    },
-  })
-
   public request = async <T = any>(config: AxiosRequestConfig) => {
-    const store = this.useStore()
+    const store = useAppStore()
 
     const { data: { items } } = await this.axios.request(config)
     store.setItems(items)

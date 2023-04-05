@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { VTextField } from 'vuetify/components'
-import { getApiService } from '~/locator'
+import { getAuthService } from '~/locator'
 import { VFormBuilder, rules } from '~/components'
 import type { VFormBuilderData, VFormBuilderInput } from '~/components'
 
@@ -22,27 +22,23 @@ const props = defineProps({
 
 const router = useRouter()
 
-const formInputs: VFormBuilderInput[] = [
-  { name: 'mail', label: 'Email', type: 'email', defaultValue: 'bullet@proof.com', component: VTextField, rules: [rules.required] },
-  { name: 'password', label: 'Password', type: 'password', defaultValue: 'pass4word', component: VTextField, rules: [rules.required] },
-]
+const formInputs = computed<VFormBuilderInput[] >(() => [
+  { name: 'mail', label: 'Email', type: 'email', defaultValue: '', component: VTextField, rules: [rules.required] },
+  { name: 'password', label: 'Password', type: 'password', defaultValue: '', component: VTextField, rules: [rules.required] },
+])
 
 const onSubmit = async (payload: VFormBuilderData) => {
   if (!payload.valid) return
 
-  const service = getApiService()
-  const store = service.useStore()
+  try {
+    const service = getAuthService()
+    await service.SignIn(payload.data.mail, payload.data.password)
 
-  const response = await service.request({
-    method: 'POST',
-    url: '/api/auth/sign_in',
-    data: {
-      mail: payload.data.mail,
-      password: payload.data.password,
-    },
-  })
-  store.setAuth(response)
-  if (props.redirect) router.push(props.redirect)
+    if (props.redirect) router.push(props.redirect)
+  }
+  catch (e: any) {
+    console.error(e)
+  }
 }
 </script>
 

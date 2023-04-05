@@ -16,7 +16,7 @@ export default defineConfig({
     UnoCSS(),
     Vuetify({
       autoImport: false,
-      // styles: { configFile: 'src/styles/settings.scss' },
+      styles: { configFile: 'src/styles/settings.scss' },
     }),
     AutoImport({
       imports: [

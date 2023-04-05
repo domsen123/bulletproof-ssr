@@ -5,8 +5,6 @@ import { getConfig } from '../config'
 
 export const loadFastify = async (fastify: FastifyInstance) => {
   const { key } = getConfig()
-  await fastify.register(cookie, {
-    secret: key,
-  })
+  await fastify.register(cookie, { secret: key })
   await fastify.register(middie)
 }
