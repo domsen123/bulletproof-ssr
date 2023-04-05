@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import { parseCookie } from '@bulletproof/shared'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import createAxios, { isAxiosError } from 'axios'
+import createAxios from 'axios'
 import { useAppStore } from '~/stores'
 
 export class ApiService {

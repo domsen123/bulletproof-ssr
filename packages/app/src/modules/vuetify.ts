@@ -1,14 +1,14 @@
 import 'vuetify/styles'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+// import * as components from 'vuetify/components'
+// import * as directives from 'vuetify/directives'
 import { createVuetify } from 'vuetify'
 import type { UserModule } from '@bulletproof/shared'
 
 export const install: UserModule = async ({ app }) => {
   const vuetify = createVuetify({
     ssr: true,
-    components,
-    directives,
+    // components,
+    // directives,
     defaults: {
       VBtn: {
         color: 'grey-lighten-4',

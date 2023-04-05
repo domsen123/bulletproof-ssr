@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsup --watch --onSuccess 'node dist/index.js'",
     "build": "tsup",
-    "start": "node -r tsconfig-paths/register dist/index.js"
+    "start": "NODE_ENV=production node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,11 @@
   "dependencies": {
     "@bulletproof/app": "workspace:^",
     "@bulletproof/shared": "workspace:^",
+    "@fastify/compress": "^6.2.1",
     "@fastify/cookie": "^8.3.0",
+    "@fastify/cors": "^8.2.1",
     "@fastify/middie": "^8.1.0",
+    "@fastify/static": "^6.10.0",
     "@nuxt/devalue": "^2.0.0",
     "cors": "^2.8.5",
     "fastify": "^4.15.0",

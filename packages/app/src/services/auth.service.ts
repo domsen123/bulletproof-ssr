@@ -39,7 +39,7 @@ export class AuthService {
       }
     }
     catch (e: any) {
-      console.log(e.response.status)
+      console.log(e)
     }
   }
 }

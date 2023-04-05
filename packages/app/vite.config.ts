@@ -15,7 +15,7 @@ export default defineConfig({
     Vue(),
     UnoCSS(),
     Vuetify({
-      autoImport: false,
+      autoImport: true,
       styles: { configFile: 'src/styles/settings.scss' },
     }),
     AutoImport({
@@ -32,9 +32,6 @@ export default defineConfig({
       vueTemplate: true,
     }),
   ],
-  optimizeDeps: {
-    include: ['vuetify'],
-  },
   ssr: {
     noExternal: [/^vuetify/],
   },

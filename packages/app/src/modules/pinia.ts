@@ -1,4 +1,5 @@
 import { createPinia } from 'pinia'
+import get from 'lodash/get'
 import type { UserModule } from '@bulletproof/shared'
 
 export const install: UserModule = async ({ app, initialState, isClient }) => {
@@ -7,7 +8,7 @@ export const install: UserModule = async ({ app, initialState, isClient }) => {
   app.use(pinia)
 
   if (isClient)
-    pinia.state.value = (initialState.pinia) || {}
+    pinia.state.value = get(initialState, 'pinia', {})
   else
     initialState.pinia = pinia.state.value
 }

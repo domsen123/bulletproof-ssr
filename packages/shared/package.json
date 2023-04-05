@@ -17,7 +17,8 @@
     }
   },
   "scripts": {
-    "build": "tsup --watch"
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "keywords": [],
   "author": "",

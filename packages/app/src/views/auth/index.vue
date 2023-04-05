@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-1 h-screen">
     <div class="flex flex-col justify-between flex-shrink-0 bg-white shadow p-20 max-w-500px w-full">
-      <VLogo />
+      <VLogo class="text-4xl" />
       <div>
         <h1 class="font-black mb-3">
           SignIn

@@ -5,7 +5,8 @@
   "scripts": {
     "api": "pnpm -r --filter @bulletproof/api",
     "app": "pnpm -r --filter @bulletproof/app",
-    "shared": "pnpm -r --filter @bulletproof/shared"
+    "shared": "pnpm -r --filter @bulletproof/shared",
+    "start": "pnpm -r build && pnpm api start"
   },
   "keywords": [],
   "author": "",

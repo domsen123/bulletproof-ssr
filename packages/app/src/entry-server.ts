@@ -61,6 +61,7 @@ export default async (renderOptions: RenderOptions): Promise<RenderResult> => {
 
   const ctx: any = {}
   const innerHtml = await renderToString(app, ctx)
+
   const preloadedLinks = renderPreloadLinks(ctx.modules, manifest)
 
   return { innerHtml, preloadedLinks, initialState }

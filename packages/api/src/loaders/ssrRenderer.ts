@@ -1,35 +1,69 @@
 import { readFileSync } from 'node:fs'
-import { dirname } from 'node:path'
+import { dirname, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
 import type { RenderOptions, RenderResult } from '@bulletproof/shared'
 import devalue from '@nuxt/devalue'
+import { isDev } from '../config'
 
 export const loadSrrRenderer = async (fastify: FastifyInstance) => {
-  const vite = await (await import('vite')).createServer({
-    root: dirname(require.resolve('@bulletproof/app/index.html')),
-    server: { middlewareMode: true },
-    appType: 'custom',
-  })
-  fastify.use(vite.middlewares)
+  let vite: any
+
+  const root = dirname(require.resolve('@bulletproof/app/index.html'))
+  const clientRoot = resolve(root, 'dist/client')
+
+  const indexProd = !isDev()
+    ? readFileSync(resolve(clientRoot, 'index.html'), 'utf-8')
+    : ''
+
+  const manifest = !isDev()
+    ? JSON.parse(readFileSync(resolve(clientRoot, 'ssr-manifest.json'), 'utf-8'))
+    : {}
+
+  if (isDev()) {
+    vite = await (await import('vite')).createServer({
+      root,
+      server: { middlewareMode: true },
+      appType: 'custom',
+    })
+    fastify.use(vite.middlewares)
+  }
+  else {
+    await fastify.register(
+      import('@fastify/compress'),
+      { global: false },
+    )
+
+    await fastify.register((await import('@fastify/static')).default, {
+      root: clientRoot,
+      index: false,
+      wildcard: true,
+      decorateReply: true,
+    })
+  }
 
   fastify.use(async (req, res, next) => {
     const url = req.url as string
     const baseURL = `${req.protocol}://${req.hostname}`
 
-    if (req.method !== 'GET' || url.startsWith('/api/'))
+    if (req.method !== 'GET' || url.startsWith('/api/') || url.startsWith('/assets/'))
       return next()
 
     let template: string
     let render: (renderOptions: RenderOptions) => Promise<RenderResult>
 
     try {
-      const manifest = {}
+      if (isDev()) {
+        template = readFileSync(require.resolve('@bulletproof/app/index.html'), 'utf-8')
+        template = await vite.transformIndexHtml(url, template)
 
-      template = readFileSync(require.resolve('@bulletproof/app/index.html'), 'utf-8')
-      template = await vite.transformIndexHtml(url, template)
-
-      // eslint-disable-next-line dot-notation
-      render = (await vite.ssrLoadModule(require.resolve('@bulletproof/app/dev')))['default']
+        // eslint-disable-next-line dot-notation
+        render = (await vite.ssrLoadModule(require.resolve('@bulletproof/app/dev')))['default']
+      }
+      else {
+        template = indexProd
+        // @ts-expect-error no declaration files needed!
+        render = (await import('@bulletproof/app/prod')).default
+      }
 
       const { innerHtml, preloadedLinks, initialState } = await render({ url, manifest, baseURL, req })
 
