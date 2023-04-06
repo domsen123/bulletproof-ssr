@@ -10,6 +10,9 @@
     </VNavigationDrawer>
     <VAppBar color="blue-grey-lighten-5">
       <template #append>
+        <VDivider vertical color="blue-grey-darken-1" />
+        <VClock class="text-sm px-8 text-blue-grey-darken-1" />
+        <VDivider vertical color="blue-grey-darken-1" />
         <VBtn v-if="authService.isSignedIn().value" color="primary" icon @click="onSignOut">
           <div class="i-ph-sign-out" />
         </VBtn>
@@ -27,7 +30,7 @@
 
 <script lang="ts" setup>
 import { getAuthService } from '~/locator'
-import { CoreNotifier, VLogo } from '~/components'
+import { CoreNotifier, VClock, VLogo } from '~/components'
 
 const router = useRouter()
 const authService = getAuthService()

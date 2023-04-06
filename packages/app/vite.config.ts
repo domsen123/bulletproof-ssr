@@ -36,7 +36,6 @@ export default defineConfig({
     include: ['vuetify'],
   },
   ssr: {
-    noExternal: [/^vuetify/],
-    external: ['pino'],
+    noExternal: [/^vuetify/, '@bulletproof/shared'],
   },
 })
