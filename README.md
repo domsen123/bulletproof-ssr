@@ -11,6 +11,6 @@
 - 💪 TypeScript, of course
 
 ## Inspired by
-- [antfu/vitesse](https://github.com/antfu/vitesse)
-- [frandiox/vite-ssr](https://github.com/frandiox/vite-ssr)
-- [santiq/bulletproof-nodejs](https://github.com/santiq/bulletproof-nodejs)
+- [antfu/vitesse](https://github.com/antfu/vitesse) - 🏕 Opinionated Vite + Vue Starter Template
+- [frandiox/vite-ssr](https://github.com/frandiox/vite-ssr) - Use Vite for server side rendering in Node
+- [santiq/bulletproof-nodejs](https://github.com/santiq/bulletproof-nodejs) - Implementation of a bulletproof node.js API 🛡️
