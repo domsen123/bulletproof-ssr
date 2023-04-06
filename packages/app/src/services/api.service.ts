@@ -1,41 +1,33 @@
-import get from 'lodash/get'
-import { parseCookie } from '@bulletproof/shared'
+import type { EntryContext } from '@bulletproof/shared'
+
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import createAxios from 'axios'
 import { useAppStore } from '~/stores'
 
 export class ApiService {
   private axios: AxiosInstance
+  private store = useAppStore()
 
-  constructor(isClient: boolean, baseURL?: string, cookieString?: string) {
-    useAppStore()
+  constructor({ isClient, baseURL }: EntryContext) {
     this.axios = createAxios.create({
       baseURL,
       withCredentials: isClient,
-      proxy: false,
     })
 
-    this.axios.interceptors.response.use(response => Promise.resolve(response), (error) => {
-      throw get(error, 'response.data', { error: 'Internal Server Error', message: 'Unknown Error.', statusCode: 500, stack: error })
+    this.axios.interceptors.request.use((config) => {
+      console.log('auth', this.store.getCurrentAuth.value)
+      return config
     })
-
-    if (!isClient && cookieString) {
-      this.axios.interceptors.request.use((config) => {
-        const access_token = parseCookie(cookieString, 'access_token')
-        if (access_token)
-          config.headers.set('Authorization', `Bearer ${access_token}`)
-
-        return config
-      })
-    }
   }
 
   public request = async <T = any>(config: AxiosRequestConfig) => {
     const store = useAppStore()
 
-    const { data: { items } } = await this.axios.request(config)
-    store.setItems(items)
+    const { data } = await this.axios.request(config)
 
-    return items
+    if (data && 'items' in data) {
+      store.setItems(data.items)
+      return data.items
+    }
   }
 }

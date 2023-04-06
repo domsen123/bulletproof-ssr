@@ -20,6 +20,10 @@ export const useAppStore = defineStore('app', {
       this.$state.currentUser = user.id
       this.$state.currentAuth = auth.id
     },
+    unsetAuth() {
+      this.$state.currentUser = ''
+      this.$state.currentAuth = ''
+    },
     setItem(data: IBase) {
       const index = this.$state.items.findIndex(item => item.id === data.id)
       if (index === -1)

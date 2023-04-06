@@ -23,8 +23,8 @@ const props = defineProps({
 const router = useRouter()
 
 const formInputs = computed<VFormBuilderInput[] >(() => [
-  { name: 'mail', label: 'Email', type: 'email', defaultValue: '', component: VTextField, rules: [rules.required] },
-  { name: 'password', label: 'Password', type: 'password', defaultValue: '', component: VTextField, rules: [rules.required] },
+  { name: 'mail', label: 'Email', type: 'email', defaultValue: 'bullet@proof.com', component: VTextField, rules: [rules.required] },
+  { name: 'password', label: 'Password', type: 'password', defaultValue: 'pass4word', component: VTextField, rules: [rules.required] },
 ])
 
 const onSubmit = async (payload: VFormBuilderData) => {

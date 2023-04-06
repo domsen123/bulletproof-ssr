@@ -1,10 +1,11 @@
+import type { EntryContext } from '@bulletproof/shared/*'
 import { ApiService, AuthService } from '../services'
 
 let __apiService: ApiService
 let __authService: AuthService
 
-export const setApiService = (isClient: boolean, baseURL?: string, cookieString?: string) => {
-  __apiService = new ApiService(isClient, baseURL, cookieString)
+export const setApiService = (ctx: EntryContext) => {
+  __apiService = new ApiService(ctx)
 }
 
 export const getApiService = () => {

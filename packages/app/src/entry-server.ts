@@ -54,7 +54,12 @@ const renderPreloadLinks = (modules: string[], manifest: Record<string, string[]
 export default async (renderOptions: RenderOptions): Promise<RenderResult> => {
   const { url, manifest, baseURL, req } = renderOptions
 
-  const { app, router, initialState } = await createApp(true, {}, baseURL, req.headers.cookie)
+  const { app, router, initialState } = await createApp({
+    isClient: false,
+    initialState: {},
+    baseURL,
+    req,
+  })
 
   router.push(url)
   await router.isReady()

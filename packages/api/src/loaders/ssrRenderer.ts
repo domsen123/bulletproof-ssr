@@ -6,8 +6,6 @@ import devalue from '@nuxt/devalue'
 import { isDev } from '../config'
 
 export const loadSrrRenderer = async (fastify: FastifyInstance) => {
-  let vite: any
-
   const root = dirname(require.resolve('@bulletproof/app/index.html'))
   const clientRoot = resolve(root, 'dist/client')
 
@@ -19,6 +17,7 @@ export const loadSrrRenderer = async (fastify: FastifyInstance) => {
     ? JSON.parse(readFileSync(resolve(clientRoot, 'ssr-manifest.json'), 'utf-8'))
     : {}
 
+  let vite: any
   if (isDev()) {
     vite = await (await import('vite')).createServer({
       root,
@@ -71,6 +70,7 @@ export const loadSrrRenderer = async (fastify: FastifyInstance) => {
 
       const html = template
         .replace('<!--preload-links-->', preloadedLinks)
+        .replace('<div id="app">', '<div id="app" class="server-rendered">')
         .replace('<!--app-html-->', innerHtml)
         .replace('</body>', `${inlineState}\n</body>`)
 

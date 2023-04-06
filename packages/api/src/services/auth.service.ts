@@ -91,4 +91,7 @@ export class AuthService {
 
     return data
   }
+
+  public SignOut = async (access_token: string): Promise<void> => {
+  }
 }

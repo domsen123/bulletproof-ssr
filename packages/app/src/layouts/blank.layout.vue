@@ -1,5 +1,5 @@
 <template>
-  <VApp>
+  <VApp full-height>
     <VMain>
       <slot />
     </VMain>

@@ -43,16 +43,24 @@ export default async (fastify: FastifyInstance) => {
           reply.statusCode = 401
           return reply.send()
         }
-
-        const authService = getAuthService()
-        const [user, auth] = await authService.SignInWithToken(req.token)
-        return sendAuthReply(reply, user, auth)
+        else {
+          const authService = getAuthService()
+          const [user, auth] = await authService.SignInWithToken(req.token)
+          return sendAuthReply(reply, user, auth)
+        }
       }
       catch (e: any) {
         fastify.log.error('🔥 Error: %o', e)
-        reply.statusCode = 500
-        return reply.send(e)
+        throw e
       }
+    },
+  })
+
+  fastify.route({
+    method: 'POST',
+    url: '/auth/sign_out',
+    handler: async (req, reply) => {
+      return reply.clearCookie('access_token').send()
     },
   })
 }

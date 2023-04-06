@@ -1,29 +1,37 @@
-import type { AppModule, EntryContext } from '@bulletproof/shared'
+import get from 'lodash/get'
+import type { AppModule, CreateApp, EntryContext } from '@bulletproof/shared'
+import { parseCookie } from '@bulletproof/shared'
 import { createSSRApp } from 'vue'
-import { getAuthService, setApiService } from './locator'
-import App from '~/App.vue'
+import { AuthService } from './services'
+import { setApiService } from '~/locator'
 import { createRouter } from '~/router'
+import App from '~/App.vue'
 import 'uno.css'
 
-export const createApp = async (ssr: boolean, initialState: any, baseURL?: string, cookieString?: string) => {
+export const createApp = async (options: CreateApp) => {
+  const { isClient, initialState, req } = options
+
   const app = createSSRApp(App)
 
-  const router = createRouter(ssr)
+  const router = createRouter(isClient)
 
   app.use(router)
 
   const ctx: EntryContext = {
     app,
     router,
-    initialState,
-    isClient: !ssr,
+    ...options,
   }
 
   for (const { install } of Object.values(import.meta.glob<AppModule>('./modules/*.ts', { eager: true })))
     install(ctx)
 
-  setApiService(!ssr, baseURL, cookieString)
-  await getAuthService().AutoSignIn()
+  let access_token = req ? get(req, 'headers.cookie', '') : ''
+  if (access_token)
+    access_token = parseCookie(access_token, 'access_token')
+
+  setApiService(ctx)
+  await AuthService.AutoSignIn(ctx, access_token)
 
   return { app, router, initialState }
 }

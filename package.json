@@ -6,7 +6,9 @@
     "api": "pnpm -r --filter @bulletproof/api",
     "app": "pnpm -r --filter @bulletproof/app",
     "shared": "pnpm -r --filter @bulletproof/shared",
-    "start": "pnpm -r build && pnpm api start"
+    "build": "pnpm -r build",
+    "start": "pnpm api start",
+    "build:start": "pnpm build && pnpm api start"
   },
   "keywords": [],
   "author": "",
