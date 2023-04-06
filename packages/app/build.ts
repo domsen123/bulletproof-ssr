@@ -18,7 +18,7 @@ import { build } from 'vite'
       target: 'esnext',
     },
     ssr: {
-      noExternal: [/^vuetify/],
+      noExternal: [/^vuetify/, '@bulletproof/shared', 'pino'],
     },
   })
 })()

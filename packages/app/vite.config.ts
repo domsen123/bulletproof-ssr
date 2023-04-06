@@ -37,5 +37,6 @@ export default defineConfig({
   },
   ssr: {
     noExternal: [/^vuetify/, '@bulletproof/shared'],
+    external: ['pino'],
   },
 })
