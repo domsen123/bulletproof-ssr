@@ -5,6 +5,8 @@
 - 🎨 [UnoCSS](https://github.com/antfu/unocss) - the instant on-demand atomic CSS engine
 - 🍍 [State Management via Pinia](https://pinia.vuejs.org/)
 - 📥 [APIs auto importing](https://github.com/antfu/unplugin-auto-import)
+- 😃 [Use icons from any icon sets with classes](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
+- 💾 [Knex](https://knexjs.org/) - low level query builder
 - 🔥 Use the [new ```<script setup>``` syntax](https://github.com/vuejs/rfcs/pull/227)
 - 💪 TypeScript, of course
-- 😃 [Use icons from any icon sets with classes](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
+
