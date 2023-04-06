@@ -3,7 +3,7 @@
 - ```git clone https://github.com/domsen123/bulletproof-ssr.git``` - clone repo
 - ```cd bulletproof-ssr``` - switch to repo
 - ```pnpm -r i``` - install all dependencies
-  ```pnpm -r build``` - to build everything
+- ```pnpm -r build``` - to build everything
 - ```pnpm api i mssql|pg|sqlite3|mysql2|oracledb``` - to install database driver
 - ```cp ./packages/api/config.example.js ./packages/api/config.dev.js``` - to copy config
 - ```nano ./packages/api/config.dev.js``` - to edit config
