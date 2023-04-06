@@ -10,3 +10,7 @@
 - 🔥 Use the [new ```<script setup>``` syntax](https://github.com/vuejs/rfcs/pull/227)
 - 💪 TypeScript, of course
 
+## Inspired by
+- [antfu/vitesse](https://github.com/antfu/vitesse)
+- [frandiox/vite-ssr](https://github.com/frandiox/vite-ssr)
+- [santiq/bulletproof-nodejs](https://github.com/santiq/bulletproof-nodejs)
