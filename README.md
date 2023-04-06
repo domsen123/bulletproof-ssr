@@ -1,3 +1,12 @@
+## Use
+
+- ```git clone https://github.com/domsen123/bulletproof-ssr.git``` - clone repo
+- ```cd bulletproof-ssr``` - switch to repo
+- ```pnpm -r i``` - install all dependencies
+- ```pnpm api i mssql|pg|sqlite3|mysql2|oracledb``` - to install database driver
+- ```cp ./packages/api/config.example.js ./packages/api/config.dev.js``` - to copy config
+- ```nano ./packages/api/config.dev.js``` - to edit config
+
 ## Features
 - ⚡ [Vue 3](https://github.com/vuejs/core), [Vite](https://github.com/vitejs/vite), [fastify](https://github.com/fastify/fastify), [pnpm](https://pnpm.io/), [tsup](https://tsup.egoist.dev/) - born with fastness
 - ![Vuetify](https://api.iconify.design/logos:vuetifyjs.svg) [Vuetify](https://vuetifyjs.com/en/) Components
