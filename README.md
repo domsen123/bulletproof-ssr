@@ -20,8 +20,8 @@ Just use ```pnpm build``` or ```pnpm build:start```
 Just use ```pnpm start```
 
 ## Initial User
-Mail: bullet@proof.com
-Pass: pass4word
+- Mail: bullet@proof.com
+- Pass: pass4word
 
 ## Features
 - ⚡ [Vue 3](https://github.com/vuejs/core), [Vite](https://github.com/vitejs/vite), [fastify](https://github.com/fastify/fastify), [pnpm](https://pnpm.io/), [tsup](https://tsup.egoist.dev/) - born with fastness
