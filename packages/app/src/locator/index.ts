@@ -9,7 +9,7 @@ let __authService: AuthService
 export const bootServices = (ctx: EntryContext) => {
   __apiService = new ApiService(ctx)
   __logger = createLogger(ctx.isClient, import.meta.env.DEV)
-  __logger.info('All Services ar booted')
+  __logger.info('All services are booted')
 }
 
 export const getApiService = () => {

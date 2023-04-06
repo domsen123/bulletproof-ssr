@@ -1,12 +1,15 @@
 <template>
   <VApp full-height>
     <VProgressLinear indeterminate />
-    <VNavigationDrawer color="blue-grey-darken-4" floating>
+    <VNavigationDrawer color="blue-grey-darken-4" theme="dark" floating>
       <VToolbar color="transparent" class="px-4">
         <VLogo class="text-xl" dark />
       </VToolbar>
-      <div class="px-4">
-      </div>
+      <VList nav density="compact" :lines="false">
+        <VListSubheader class="uppercase text-xs font-black tracking-tighter" title="Admin" />
+        <VListItem to="/admin/users" variant="text" rounded title="Users" />
+        <VListItem to="/admin/roles" variant="text" rounded title="Roles" />
+      </VList>
     </VNavigationDrawer>
     <VAppBar color="blue-grey-lighten-5">
       <template #append>

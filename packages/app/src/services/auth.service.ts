@@ -54,6 +54,7 @@ export class AuthService {
       store.setAuth(response)
     }
     catch (e: any) {
+      this.logger.error(e.message)
       store.createNotification({
         type: 'error',
         message: e.message,
@@ -72,6 +73,7 @@ export class AuthService {
       store.unsetAuth()
     }
     catch (e: any) {
+      this.logger.error(e.message)
       store.createNotification({
         type: 'error',
         message: e.message,
