@@ -13,7 +13,9 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["dist/index.d.ts"]
+      "*": [
+        "dist/index.d.ts"
+      ]
     }
   },
   "scripts": {
@@ -29,6 +31,8 @@
     "vue-router": "^4.1.6"
   },
   "dependencies": {
-    "@nuxt/devalue": "^2.0.0"
+    "@nuxt/devalue": "^2.0.0",
+    "pino": "^8.11.0",
+    "pino-pretty": "^10.0.0"
   }
 }

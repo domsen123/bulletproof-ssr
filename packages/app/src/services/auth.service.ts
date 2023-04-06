@@ -1,10 +1,11 @@
 import axios from 'axios'
-import type { EntryContext } from '@bulletproof/shared/*'
+import type { EntryContext, Logger } from '@bulletproof/shared'
 import { useAppStore } from '../stores'
+import { getLoggingService } from '../locator'
 import type { ApiService } from './api.service'
 
 export class AuthService {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private logger: Logger) {}
 
   public isSignedIn = (): ComputedRef<boolean> => {
     const store = useAppStore()
@@ -30,9 +31,10 @@ export class AuthService {
           store.setItems(data.items)
         }
       }
-      console.log(`AutoSignIn Success: ${isClient ? 'Client' : 'Server'}`)
+      getLoggingService().info('Auto Sign In Success')
     }
     catch (e: any) {
+      getLoggingService().warn('Auto Sign In Failed')
       store.unsetAuth()
     }
   }

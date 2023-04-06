@@ -3,7 +3,7 @@ import type { AppModule, CreateApp, EntryContext } from '@bulletproof/shared'
 import { parseCookie } from '@bulletproof/shared'
 import { createSSRApp } from 'vue'
 import { AuthService } from './services'
-import { setApiService } from '~/locator'
+import { bootServices } from '~/locator'
 import { createRouter } from '~/router'
 import App from '~/App.vue'
 import 'uno.css'
@@ -30,7 +30,7 @@ export const createApp = async (options: CreateApp) => {
   if (access_token)
     access_token = parseCookie(access_token, 'access_token')
 
-  setApiService(ctx)
+  bootServices(ctx)
   await AuthService.AutoSignIn(ctx, access_token)
 
   return { app, router, initialState }

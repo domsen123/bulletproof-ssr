@@ -1,10 +1,11 @@
 import createFastify from 'fastify'
-import { getConfig } from './config'
+import { createLogger } from '@bulletproof/shared'
+import { getConfig, isDev } from './config'
 import { loadServer } from './loaders'
 
 export const startServer = async () => {
   const fastify = createFastify({
-    logger: true,
+    logger: createLogger(false, isDev()),
     disableRequestLogging: true,
   })
 

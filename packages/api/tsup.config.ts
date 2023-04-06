@@ -6,7 +6,7 @@ export default defineConfig({
   format: ['cjs'],
   clean: true,
   noExternal: ['@bulletproof/app'],
-  external: ['esbuild', 'vite'],
+  external: ['esbuild', 'vite', '@bulletproof/shared'],
   sourcemap: true,
   minify: false,
   bundle: false,
