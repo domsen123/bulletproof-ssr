@@ -31,8 +31,11 @@
     "vue-router": "^4.1.6"
   },
   "dependencies": {
-    "@nuxt/devalue": "^2.0.0",
+    "@nuxt/devalue": "^2.0.0"
+  },
+  "peerDependencies": {
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0"
   }
+
 }
