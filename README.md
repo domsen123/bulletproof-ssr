@@ -16,7 +16,7 @@ Just use ```pnpm api dev```
 
 ## Production
 Be sure you created **production** config ```./packages/api/config.js```\
-Just use ```pnpm build``` or ```pnpm build:start```
+Just use ```pnpm build:start```
 
 ## Start Production
 Just use ```pnpm start```
