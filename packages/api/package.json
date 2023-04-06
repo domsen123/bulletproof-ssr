@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsup --watch --onSuccess 'node dist/index.js'",
     "build": "tsup",
-    "start": "NODE_ENV=production node dist/index.js"
+    "start": "NODE_ENV=production node dist/index.js",
+    "cli": "esno cli.ts"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +34,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/lodash": "^4.14.192",
     "@types/uuid": "^9.0.1",
+    "commander": "^10.0.0",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^6.7.0",
     "tsx": "^3.12.6",
