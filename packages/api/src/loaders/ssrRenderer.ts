@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
 import type { RenderOptions, RenderResult } from '@bulletproof/shared'
 import devalue from '@nuxt/devalue'
-import { isDev } from '../config'
+import { getConfig, isDev } from '../config'
 
 export const loadSrrRenderer = async (fastify: FastifyInstance) => {
   const root = dirname(require.resolve('@bulletproof/app/index.html'))
@@ -42,7 +42,10 @@ export const loadSrrRenderer = async (fastify: FastifyInstance) => {
 
   fastify.use(async (req, res, next) => {
     const url = req.url as string
-    const baseURL = `${req.protocol}://${req.hostname}`
+
+    // waiting for: https://github.com/fastify/middie/pull/180
+    // const baseURL = `${req.protocol}://${req.hostname}`
+    const { publicURL: baseURL } = getConfig()
 
     if (req.method !== 'GET' || url.startsWith('/api/') || url.startsWith('/assets/'))
       return next()
